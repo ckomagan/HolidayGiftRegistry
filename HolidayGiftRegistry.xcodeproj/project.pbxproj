@@ -1,0 +1,464 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E0E9AD2B166ECB1300824109 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E9AD2A166ECB1300824109 /* UIKit.framework */; };
+		E0E9AD2D166ECB1300824109 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E9AD2C166ECB1300824109 /* Foundation.framework */; };
+		E0E9AD2F166ECB1300824109 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E9AD2E166ECB1300824109 /* CoreGraphics.framework */; };
+		E0E9AD35166ECB1300824109 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E0E9AD33166ECB1300824109 /* InfoPlist.strings */; };
+		E0E9AD37166ECB1300824109 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E9AD36166ECB1300824109 /* main.m */; };
+		E0E9AD3B166ECB1300824109 /* HGRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E9AD3A166ECB1300824109 /* HGRAppDelegate.m */; };
+		E0E9AD3D166ECB1300824109 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E0E9AD3C166ECB1300824109 /* Default.png */; };
+		E0E9AD3F166ECB1300824109 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0E9AD3E166ECB1300824109 /* Default@2x.png */; };
+		E0E9AD41166ECB1300824109 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0E9AD40166ECB1300824109 /* Default-568h@2x.png */; };
+		E0E9AD44166ECB1300824109 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0E9AD42166ECB1300824109 /* MainStoryboard.storyboard */; };
+		E0E9AD47166ECB1300824109 /* HGRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E9AD46166ECB1300824109 /* HGRViewController.m */; };
+		E0E9AD4F166ECB1300824109 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E9AD4E166ECB1300824109 /* SenTestingKit.framework */; };
+		E0E9AD50166ECB1300824109 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E9AD2A166ECB1300824109 /* UIKit.framework */; };
+		E0E9AD51166ECB1300824109 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0E9AD2C166ECB1300824109 /* Foundation.framework */; };
+		E0E9AD59166ECB1300824109 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E0E9AD57166ECB1300824109 /* InfoPlist.strings */; };
+		E0E9AD5C166ECB1300824109 /* HolidayGiftRegistryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E9AD5B166ECB1300824109 /* HolidayGiftRegistryTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E0E9AD52166ECB1300824109 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E0E9AD1D166ECB1300824109 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E0E9AD25166ECB1300824109;
+			remoteInfo = HolidayGiftRegistry;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E0E9AD26166ECB1300824109 /* HolidayGiftRegistry.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HolidayGiftRegistry.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0E9AD2A166ECB1300824109 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E0E9AD2C166ECB1300824109 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E0E9AD2E166ECB1300824109 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E0E9AD32166ECB1300824109 /* HolidayGiftRegistry-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HolidayGiftRegistry-Info.plist"; sourceTree = "<group>"; };
+		E0E9AD34166ECB1300824109 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E0E9AD36166ECB1300824109 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E0E9AD38166ECB1300824109 /* HolidayGiftRegistry-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HolidayGiftRegistry-Prefix.pch"; sourceTree = "<group>"; };
+		E0E9AD39166ECB1300824109 /* HGRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HGRAppDelegate.h; sourceTree = "<group>"; };
+		E0E9AD3A166ECB1300824109 /* HGRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HGRAppDelegate.m; sourceTree = "<group>"; };
+		E0E9AD3C166ECB1300824109 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		E0E9AD3E166ECB1300824109 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		E0E9AD40166ECB1300824109 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		E0E9AD43166ECB1300824109 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		E0E9AD45166ECB1300824109 /* HGRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HGRViewController.h; sourceTree = "<group>"; };
+		E0E9AD46166ECB1300824109 /* HGRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HGRViewController.m; sourceTree = "<group>"; };
+		E0E9AD4D166ECB1300824109 /* HolidayGiftRegistryTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HolidayGiftRegistryTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0E9AD4E166ECB1300824109 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		E0E9AD56166ECB1300824109 /* HolidayGiftRegistryTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HolidayGiftRegistryTests-Info.plist"; sourceTree = "<group>"; };
+		E0E9AD58166ECB1300824109 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E0E9AD5A166ECB1300824109 /* HolidayGiftRegistryTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HolidayGiftRegistryTests.h; sourceTree = "<group>"; };
+		E0E9AD5B166ECB1300824109 /* HolidayGiftRegistryTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HolidayGiftRegistryTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E0E9AD23166ECB1300824109 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0E9AD2B166ECB1300824109 /* UIKit.framework in Frameworks */,
+				E0E9AD2D166ECB1300824109 /* Foundation.framework in Frameworks */,
+				E0E9AD2F166ECB1300824109 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0E9AD49166ECB1300824109 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0E9AD4F166ECB1300824109 /* SenTestingKit.framework in Frameworks */,
+				E0E9AD50166ECB1300824109 /* UIKit.framework in Frameworks */,
+				E0E9AD51166ECB1300824109 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E0E9AD1B166ECB1300824109 = {
+			isa = PBXGroup;
+			children = (
+				E0E9AD30166ECB1300824109 /* HolidayGiftRegistry */,
+				E0E9AD54166ECB1300824109 /* HolidayGiftRegistryTests */,
+				E0E9AD29166ECB1300824109 /* Frameworks */,
+				E0E9AD27166ECB1300824109 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E0E9AD27166ECB1300824109 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E0E9AD26166ECB1300824109 /* HolidayGiftRegistry.app */,
+				E0E9AD4D166ECB1300824109 /* HolidayGiftRegistryTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E0E9AD29166ECB1300824109 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E0E9AD2A166ECB1300824109 /* UIKit.framework */,
+				E0E9AD2C166ECB1300824109 /* Foundation.framework */,
+				E0E9AD2E166ECB1300824109 /* CoreGraphics.framework */,
+				E0E9AD4E166ECB1300824109 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E0E9AD30166ECB1300824109 /* HolidayGiftRegistry */ = {
+			isa = PBXGroup;
+			children = (
+				E0E9AD39166ECB1300824109 /* HGRAppDelegate.h */,
+				E0E9AD3A166ECB1300824109 /* HGRAppDelegate.m */,
+				E0E9AD42166ECB1300824109 /* MainStoryboard.storyboard */,
+				E0E9AD45166ECB1300824109 /* HGRViewController.h */,
+				E0E9AD46166ECB1300824109 /* HGRViewController.m */,
+				E0E9AD31166ECB1300824109 /* Supporting Files */,
+			);
+			path = HolidayGiftRegistry;
+			sourceTree = "<group>";
+		};
+		E0E9AD31166ECB1300824109 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E0E9AD32166ECB1300824109 /* HolidayGiftRegistry-Info.plist */,
+				E0E9AD33166ECB1300824109 /* InfoPlist.strings */,
+				E0E9AD36166ECB1300824109 /* main.m */,
+				E0E9AD38166ECB1300824109 /* HolidayGiftRegistry-Prefix.pch */,
+				E0E9AD3C166ECB1300824109 /* Default.png */,
+				E0E9AD3E166ECB1300824109 /* Default@2x.png */,
+				E0E9AD40166ECB1300824109 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E0E9AD54166ECB1300824109 /* HolidayGiftRegistryTests */ = {
+			isa = PBXGroup;
+			children = (
+				E0E9AD5A166ECB1300824109 /* HolidayGiftRegistryTests.h */,
+				E0E9AD5B166ECB1300824109 /* HolidayGiftRegistryTests.m */,
+				E0E9AD55166ECB1300824109 /* Supporting Files */,
+			);
+			path = HolidayGiftRegistryTests;
+			sourceTree = "<group>";
+		};
+		E0E9AD55166ECB1300824109 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E0E9AD56166ECB1300824109 /* HolidayGiftRegistryTests-Info.plist */,
+				E0E9AD57166ECB1300824109 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E0E9AD25166ECB1300824109 /* HolidayGiftRegistry */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0E9AD5F166ECB1300824109 /* Build configuration list for PBXNativeTarget "HolidayGiftRegistry" */;
+			buildPhases = (
+				E0E9AD22166ECB1300824109 /* Sources */,
+				E0E9AD23166ECB1300824109 /* Frameworks */,
+				E0E9AD24166ECB1300824109 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HolidayGiftRegistry;
+			productName = HolidayGiftRegistry;
+			productReference = E0E9AD26166ECB1300824109 /* HolidayGiftRegistry.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E0E9AD4C166ECB1300824109 /* HolidayGiftRegistryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0E9AD62166ECB1300824109 /* Build configuration list for PBXNativeTarget "HolidayGiftRegistryTests" */;
+			buildPhases = (
+				E0E9AD48166ECB1300824109 /* Sources */,
+				E0E9AD49166ECB1300824109 /* Frameworks */,
+				E0E9AD4A166ECB1300824109 /* Resources */,
+				E0E9AD4B166ECB1300824109 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E0E9AD53166ECB1300824109 /* PBXTargetDependency */,
+			);
+			name = HolidayGiftRegistryTests;
+			productName = HolidayGiftRegistryTests;
+			productReference = E0E9AD4D166ECB1300824109 /* HolidayGiftRegistryTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E0E9AD1D166ECB1300824109 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = HGR;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Chan Komagan";
+			};
+			buildConfigurationList = E0E9AD20166ECB1300824109 /* Build configuration list for PBXProject "HolidayGiftRegistry" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E0E9AD1B166ECB1300824109;
+			productRefGroup = E0E9AD27166ECB1300824109 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E0E9AD25166ECB1300824109 /* HolidayGiftRegistry */,
+				E0E9AD4C166ECB1300824109 /* HolidayGiftRegistryTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E0E9AD24166ECB1300824109 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0E9AD35166ECB1300824109 /* InfoPlist.strings in Resources */,
+				E0E9AD3D166ECB1300824109 /* Default.png in Resources */,
+				E0E9AD3F166ECB1300824109 /* Default@2x.png in Resources */,
+				E0E9AD41166ECB1300824109 /* Default-568h@2x.png in Resources */,
+				E0E9AD44166ECB1300824109 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0E9AD4A166ECB1300824109 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0E9AD59166ECB1300824109 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E0E9AD4B166ECB1300824109 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E0E9AD22166ECB1300824109 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0E9AD37166ECB1300824109 /* main.m in Sources */,
+				E0E9AD3B166ECB1300824109 /* HGRAppDelegate.m in Sources */,
+				E0E9AD47166ECB1300824109 /* HGRViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0E9AD48166ECB1300824109 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0E9AD5C166ECB1300824109 /* HolidayGiftRegistryTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E0E9AD53166ECB1300824109 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E0E9AD25166ECB1300824109 /* HolidayGiftRegistry */;
+			targetProxy = E0E9AD52166ECB1300824109 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E0E9AD33166ECB1300824109 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E0E9AD34166ECB1300824109 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E0E9AD42166ECB1300824109 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E0E9AD43166ECB1300824109 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		E0E9AD57166ECB1300824109 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E0E9AD58166ECB1300824109 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E0E9AD5D166ECB1300824109 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		E0E9AD5E166ECB1300824109 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E0E9AD60166ECB1300824109 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HolidayGiftRegistry/HolidayGiftRegistry-Prefix.pch";
+				INFOPLIST_FILE = "HolidayGiftRegistry/HolidayGiftRegistry-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E0E9AD61166ECB1300824109 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HolidayGiftRegistry/HolidayGiftRegistry-Prefix.pch";
+				INFOPLIST_FILE = "HolidayGiftRegistry/HolidayGiftRegistry-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		E0E9AD63166ECB1300824109 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/HolidayGiftRegistry.app/HolidayGiftRegistry";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HolidayGiftRegistry/HolidayGiftRegistry-Prefix.pch";
+				INFOPLIST_FILE = "HolidayGiftRegistryTests/HolidayGiftRegistryTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		E0E9AD64166ECB1300824109 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/HolidayGiftRegistry.app/HolidayGiftRegistry";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "HolidayGiftRegistry/HolidayGiftRegistry-Prefix.pch";
+				INFOPLIST_FILE = "HolidayGiftRegistryTests/HolidayGiftRegistryTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E0E9AD20166ECB1300824109 /* Build configuration list for PBXProject "HolidayGiftRegistry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0E9AD5D166ECB1300824109 /* Debug */,
+				E0E9AD5E166ECB1300824109 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E0E9AD5F166ECB1300824109 /* Build configuration list for PBXNativeTarget "HolidayGiftRegistry" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0E9AD60166ECB1300824109 /* Debug */,
+				E0E9AD61166ECB1300824109 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E0E9AD62166ECB1300824109 /* Build configuration list for PBXNativeTarget "HolidayGiftRegistryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0E9AD63166ECB1300824109 /* Debug */,
+				E0E9AD64166ECB1300824109 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E0E9AD1D166ECB1300824109 /* Project object */;
+}
