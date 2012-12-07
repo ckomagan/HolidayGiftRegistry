@@ -9,5 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface HGRViewController : UIViewController
+{
+    IBOutlet UIButton *registration;
+    UITextField *name, *email, *password;
+}
+@property (nonatomic, strong) NSString *username, *useremail, *userpass;
+@property (nonatomic, retain) NSMutableData *responseData;
+
+-(IBAction)registerAccount;
 
 @end
