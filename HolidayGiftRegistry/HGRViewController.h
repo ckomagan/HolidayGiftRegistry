@@ -11,10 +11,12 @@
 @interface HGRViewController : UIViewController
 {
     IBOutlet UIButton *registration;
-    UITextField *name, *email, *password;
+    UITextField *name, *email, *password, *registry;
+    IBOutlet UILabel *statusLabel, *registerFrame;
 }
 @property (nonatomic, strong) NSString *username, *useremail, *userpass;
 @property (nonatomic, retain) NSMutableData *responseData;
+@property (nonatomic, retain)  UILabel *statusLabel;
 
 -(IBAction)registerAccount;
 
