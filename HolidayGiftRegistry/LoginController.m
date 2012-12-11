@@ -76,9 +76,9 @@ UIButton *loginBtn;
 -(void)initializeButton
 {
     loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginBtn setFrame:CGRectMake(160, 680, 250, 60)];
+    [loginBtn setFrame:CGRectMake(350, 680, 250, 60)];
     [loginBtn setTitle:@"Login" forState:UIControlStateNormal];
-    [[loginBtn titleLabel] setFont:[UIFont fontWithName:@"Gill Sans" size:40.0f]];
+    [[loginBtn titleLabel] setFont:[UIFont fontWithName:@"Gill Sans" size:45.0f]];
     [loginBtn setBackgroundImage:btnSelectedImage forState:UIControlStateNormal];
     [loginBtn addTarget:self action:@selector(performLogin) forControlEvents:UIControlEventTouchUpInside];
     CAGradientLayer *btnGradient = [CAGradientLayer layer];

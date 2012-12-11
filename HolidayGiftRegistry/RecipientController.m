@@ -1,5 +1,6 @@
 
 #import "RecipientController.h"
+#import "ImageController.h"
 #import "ASIFormDataRequest.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -9,13 +10,14 @@
 @end;
 
 @implementation RecipientController
-@synthesize statusLabel, popoverController, contactImage, userfirstname, useremail, userphone, nsURL, responseData, userId;
+@synthesize statusLabel, popoverController, contactImageView, userfirstname, useremail, userphone, nsURL, responseData, userId;
 @synthesize spinner = _spinner;
 NSDictionary *res;
 NSUserDefaults *standardUserDefaults;
 BOOL newMedia;
 NSString *imagePeopleURL = @"http://komagan.com/holidaygift/uploads/people/";
-UIImage *image;
+UIImage *contactImage;
+ImageController *peopleImageController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,13 +42,15 @@ UIImage *image;
 {
     [self initiateUIControls];
     [self initializeButtons];
-    self.spinner.hidden = TRUE;
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"snow-background.jpg"]]];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)initiateUIControls
 {
+    self.spinner.hidden = TRUE;
+
     /* initiate name */
     firstNameTxt = [[UITextField alloc] initWithFrame:CGRectMake(240, 220, 440, 50)];
     firstNameTxt.borderStyle = 3; // rounded, recessed rectangle
@@ -172,6 +176,7 @@ UIImage *image;
 
 -(IBAction)addContact
 {
+    [self saveImage:contactImage];
     nsURL = @"http://www.komagan.com/holidaygift/index.php?format=json&addContact=1";
     userfirstname = firstNameTxt.text; useremail = emailTxt.text; userphone = phoneNumberTxt.text;
     self.responseData = [NSMutableData data];
@@ -202,67 +207,6 @@ UIImage *image;
     [self presentModalViewController:vc animated:false];
 }
 
-- (IBAction)useCameraRoll: (id)sender
-{
-    if(firstNameTxt.text && emailTxt.text)
-    {
-    if ([self.popoverController isPopoverVisible]) {
-        [self.popoverController dismissPopoverAnimated:YES];
-    } else {
-        if ([UIImagePickerController isSourceTypeAvailable:
-             UIImagePickerControllerSourceTypeSavedPhotosAlbum])
-        {
-            UIImagePickerController *imagePicker =
-            [[UIImagePickerController alloc] init];
-            imagePicker.delegate = self;
-            imagePicker.sourceType =
-            UIImagePickerControllerSourceTypePhotoLibrary;
-            imagePicker.mediaTypes = [NSArray arrayWithObjects:
-                                      (NSString *) kUTTypeImage,
-                                      nil];
-            imagePicker.allowsEditing = NO;
-            
-            self.popoverController = [[UIPopoverController alloc]
-                                      initWithContentViewController:imagePicker];
-            
-            popoverController.delegate = self;
-            
-            [self.popoverController presentPopoverFromRect:uploadBtn.frame
-                                                    inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-            newMedia = NO;
-        }
-    }
-    }
-    else{
-        statusLabel.text = @"Please enter Contact name and email!";
-    }
-}
-
-//delegate methode will be called after picking photo either from camera or library
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [self.popoverController dismissPopoverAnimated:true];
-    
-    NSString *mediaType = [info
-                           objectForKey:UIImagePickerControllerMediaType];
-    [self dismissModalViewControllerAnimated:YES];
-    if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
-        image = [info
-                 objectForKey:UIImagePickerControllerOriginalImage];
-        
-        if (newMedia)
-            UIImageWriteToSavedPhotosAlbum(image,
-                                           self,
-                                           @selector(image:finishedSavingWithError:contextInfo:),
-                                           nil);
-        [self saveImage:image];
-    }
-    else if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])
-    {
-        // Code here to support video if enabled
-    }
-}
-
 -(void)saveImage:(UIImage*)image
 {
     NSData *imageData = UIImageJPEGRepresentation(image, 0.2);     //change Image to NSData
@@ -270,6 +214,7 @@ UIImage *image;
     if (imageData != nil)
     {
         self.spinner.hidden = FALSE;
+        [self.spinner startAnimating];
         NSString *urlString = @"http://www.komagan.com/holidaygift/index.php?format=json&uploadImage=1";
         urlString = [urlString stringByAppendingString:@"&target=uploads/people/"];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -295,9 +240,6 @@ UIImage *image;
         NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
         
-        imagePeopleURL = [imagePeopleURL stringByAppendingString:userfirstname];
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imagePeopleURL]];
-        contactImage.image = [UIImage imageWithData:imageData];
         NSLog(@"%@", returnString);
     }
 }
@@ -346,14 +288,33 @@ UIImage *image;
     [self validateTextField];
 }
 
+-(IBAction)UpLoadImage {
+    if(userfirstname)
+    {
+        peopleImageController = [[ImageController alloc] initWithNibName:@"ImageController" bundle:nil];
+        peopleImageController.source = @"Contact";
+        peopleImageController.photoName = userfirstname;
+        [self presentModalViewController:peopleImageController animated:true];
+    }
+    else{
+        statusLabel.text = @"Please enter the gift name!";
+    }
+}
+
+
 -(IBAction)redirectMyRegistry
 {
+    self.spinner.hidden = TRUE;
+    [self.spinner startAnimating];
+
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil]  instantiateViewControllerWithIdentifier:@"WishListController"];
     [self presentModalViewController:vc animated:false];
 }
 
 -(IBAction)redirectAddGift
 {
+    self.spinner.hidden = FALSE;
+    [self.spinner startAnimating];
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil]  instantiateViewControllerWithIdentifier:@"GiftController"];
     [self presentModalViewController:vc animated:false];
 }
@@ -362,6 +323,19 @@ UIImage *image;
 {
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil]  instantiateViewControllerWithIdentifier:@"RecipientController"];
     [self presentModalViewController:vc animated:false];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if(peopleImageController && firstNameTxt.text)
+    {
+        contactImage = peopleImageController.image;
+        if(contactImage) {
+            contactImageView.image = contactImage;
+            uploadBtn.hidden = TRUE;
+        }
+    }
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload

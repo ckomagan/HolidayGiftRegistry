@@ -1,5 +1,6 @@
 
 #import "GiftController.h"
+#import "ImageController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ASIFormDataRequest.h"
 
@@ -9,13 +10,15 @@
 @end;
 
 @implementation GiftController
-@synthesize levelpicker, popoverController, giftItemImage, nsURL, responseData, userId;
-@synthesize giftName, giftType, giftPrice, giftStore, giftImage, toolbar;
+@synthesize levelpicker, popoverController, giftItemImageView, nsURL, responseData, userId;
+@synthesize giftName, giftType, giftPrice, giftStore, toolbar;
 @synthesize spinner = _spinner;
 BOOL newMedia;
 NSUserDefaults *standardUserDefaults;
-NSString *imageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
-UIImage *image;
+NSString *giftImageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
+UIImage *giftImage;
+UIImagePickerController *imagePicker;
+ImageController *imageController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,6 +43,7 @@ UIImage *image;
 {
     [self initiateUIControls];
     [self initializeButtons];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"snow-background.jpg"]]];
     addGiftBtn.enabled = NO;
     statusLabel.text = @" ";
     self.spinner.hidden = TRUE;
@@ -112,13 +116,6 @@ UIImage *image;
     storeText.delegate = self;
     [self.view addSubview:storeText];
     
-    imageURL = [imageURL stringByAppendingString:@"/chan.jpg"];
-    NSLog(@"imageUrl = %@", imageURL);
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
-
-    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
-    giftItemImage.image = [UIImage imageWithData:imageData];
-    
     //giftItemImage.image = image;
 }
 
@@ -165,89 +162,6 @@ UIImage *image;
     return [levelpicker objectAtIndex:row];
 }
 
-- (IBAction)useCamera: (id)sender
-{
- 
-    if ([UIImagePickerController isSourceTypeAvailable:
-         UIImagePickerControllerSourceTypeCamera])
-    {
-        UIImagePickerController *imagePicker =
-        [[UIImagePickerController alloc] init];
-        imagePicker.delegate = self;
-        imagePicker.sourceType =
-        UIImagePickerControllerSourceTypeCamera;
-        imagePicker.mediaTypes = [NSArray arrayWithObjects:
-                                  (NSString *) kUTTypeImage,
-                                  nil];
-        imagePicker.allowsEditing = NO;
-        [self presentModalViewController:imagePicker
-                                animated:YES];
-        newMedia = YES;
-    }
-}
-
-- (IBAction)useCameraRoll: (id)sender
-{
-    if(itemText.text)
-    {
-    self.spinner.hidden = FALSE;
-    if ([self.popoverController isPopoverVisible]) {
-        [self.popoverController dismissPopoverAnimated:YES];
-    } else {
-        if ([UIImagePickerController isSourceTypeAvailable:
-             UIImagePickerControllerSourceTypeSavedPhotosAlbum])
-        {
-            UIImagePickerController *imagePicker =
-            [[UIImagePickerController alloc] init];
-            imagePicker.delegate = self;
-            imagePicker.sourceType =
-            UIImagePickerControllerSourceTypePhotoLibrary;
-            imagePicker.mediaTypes = [NSArray arrayWithObjects:
-                                      (NSString *) kUTTypeImage,
-                                      nil];
-            imagePicker.allowsEditing = NO;
-            
-            self.popoverController = [[UIPopoverController alloc]
-                                      initWithContentViewController:imagePicker];
-            
-            popoverController.delegate = self;
-            
-            [self.popoverController presentPopoverFromRect:uploadBtn.frame
-                                                   inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
-            newMedia = NO;
-        }
-    }
-    }
-    else{
-        statusLabel.text = @"Please enter a Gift name first!";
-    }
-}
-
-//delegate methode will be called after picking photo either from camera or library
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [self.popoverController dismissPopoverAnimated:true];
-    
-    NSString *mediaType = [info
-                           objectForKey:UIImagePickerControllerMediaType];
-    [self dismissModalViewControllerAnimated:YES];
-    if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
-        image = [info
-                          objectForKey:UIImagePickerControllerOriginalImage];
-        
-        if (newMedia)
-            UIImageWriteToSavedPhotosAlbum(image,
-                                           self,
-                                           @selector(image:finishedSavingWithError:contextInfo:),
-                                           nil);
-        [self saveImage:image];
-    }
-    else if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])
-    {
-        // Code here to support video if enabled
-    }
-}
-
 -(void)saveImage:(UIImage*)image
 {
     NSData *imageData = UIImageJPEGRepresentation(image, 0.2);     //change Image to NSData
@@ -279,11 +193,7 @@ UIImage *image;
         NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
         NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
         
-        /*Display stored image in the UIImageView*/
-        imageURL = [imageURL stringByAppendingString:giftName];
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]];
-        giftItemImage.image = [UIImage imageWithData:imageData];
-        NSLog(@"%@", returnString);
+        [self dismissView];
     }
 }
 
@@ -302,14 +212,25 @@ finishedSavingWithError:(NSError *)error
     }
 }
 
+-(BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)thePopoverController{
+    NSLog(@"clicked outside the popover");//never prints
+    return YES;
+}
+
+-(void) imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [[picker parentViewController] dismissModalViewControllerAnimated: YES];
+    picker.delegate = nil;
+}
+
 -(IBAction)addGift
 {
     [self validateTextField];
+    [self saveImage:giftImage];
     nsURL = @"http://www.komagan.com/holidaygift/index.php?format=json&addGift=1";
     giftName = itemText.text; giftPrice = priceText.text; giftStore = storeText.text;
     self.responseData = [NSMutableData data];
     NSURL *url = [NSURL URLWithString:nsURL];
-    giftImage = [imageURL stringByAppendingString:giftName];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
     userId = [standardUserDefaults objectForKey:@"id"];
@@ -322,7 +243,7 @@ finishedSavingWithError:(NSError *)error
     [request setPostValue:giftType forKey:@"giftType"];
     [request setPostValue:giftPrice forKey:@"giftPrice"];
     [request setPostValue:giftStore forKey:@"giftStore"];
-    [request setPostValue:giftImage forKey:@"giftImage"];
+    [request setPostValue:[giftImageURL stringByAppendingString:giftName] forKey:@"giftImage"];
 
     [request setDelegate:self];
     [request startAsynchronous];
@@ -398,8 +319,24 @@ finishedSavingWithError:(NSError *)error
     [giftTypePicker selectRow:[[standardUserDefaults objectForKey:@"category"] intValue] inComponent:component animated:NO];
 }
 
+-(IBAction)UpLoadImage {
+    if(giftName)
+    {
+    imageController = [[ImageController alloc] initWithNibName:@"ImageController" bundle:nil];
+    imageController.source = @"Game";
+    imageController.photoName = giftName;
+    [self presentModalViewController:imageController animated:true];
+    }
+    else{
+        statusLabel.text = @"Please enter the gift name!";
+    }
+}
+
 -(IBAction)redirectMyRegistry
 {
+    self.spinner.hidden = TRUE;
+    [self.spinner startAnimating];
+
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil]  instantiateViewControllerWithIdentifier:@"WishListController"];
     [self presentModalViewController:vc animated:false];
 }
@@ -418,7 +355,7 @@ finishedSavingWithError:(NSError *)error
 
 - (void)viewDidUnload
 {
-    giftItemImage = nil;
+    giftItemImageView = nil;
     self.popoverController = nil;
     self.toolbar = nil;
     [super viewDidUnload];
@@ -426,9 +363,17 @@ finishedSavingWithError:(NSError *)error
     // e.g. self.myOutlet = nil;
 }
 
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+- (void)viewWillAppear:(BOOL)animated
 {
-    [self dismissModalViewControllerAnimated:YES];
+    if(imageController && itemText.text)
+    {
+    giftImage = imageController.image;
+    if(giftImage) {
+        giftItemImageView.image = giftImage;
+        uploadBtn.hidden = TRUE;
+    }
+    }
+    [super viewWillAppear:animated];
 }
 
 -(IBAction)dismissView {

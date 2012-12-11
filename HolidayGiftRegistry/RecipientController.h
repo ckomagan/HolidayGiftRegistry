@@ -6,6 +6,7 @@
     UITextField *firstNameTxt, *emailTxt, *phoneNumberTxt;
     IBOutlet UILabel *statusLabel, *recipientFrame;
     UIPopoverController *popoverController;
+    UIImageView *contactImageView;
     IBOutlet UIButton *addContactBtn, *uploadBtn;
     IBOutlet UIButton *peopleBtn, *giftsBtn, *progressBtn, *settingsBtn;
 }
@@ -16,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTxt;
 @property (nonatomic, retain) NSMutableData *responseData;
 @property (nonatomic, retain)  UILabel *statusLabel;
-@property (nonatomic, retain) IBOutlet UIImageView *contactImage;
+@property (nonatomic, retain) IBOutlet UIImageView *contactImageView;
 @property (nonatomic, retain) UIPopoverController *popoverController;
 
 -(IBAction)showPicker:(id)sender;

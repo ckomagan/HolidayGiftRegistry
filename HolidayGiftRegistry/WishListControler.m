@@ -4,6 +4,7 @@
 
 @interface WishListController()
 @property (nonatomic, strong) NSString *nsURL;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @end;
 
 @implementation WishListController
@@ -14,6 +15,8 @@ int totalItems, userid;
 int rowHeight = 80;
 NSString *name;
 int completed = 1;
+@synthesize spinner = _spinner;
+NSString *baseImageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,21 +40,24 @@ int completed = 1;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"snow-background.jpg"]]];
+
     giftTableList.rowHeight = rowHeight;
-    gifts = [[NSMutableArray alloc] init];
-    giftNameList = giftImageList = giftStatusList = giftRecipientList = [[NSMutableArray alloc] init];
+    giftImageList = [[NSMutableArray alloc] init]; giftNameList = [[NSMutableArray alloc] init]; giftStatusList = [[NSMutableArray alloc] init];
     giftTableList.scrollEnabled = YES;
     [giftTableList setBackgroundColor:UIColor.clearColor]; // Make the table view transparent
     [giftTableList setDelegate:self];
     [giftTableList setDataSource:self];
-    [self initializeCheckButton];
     [self loadUserSession];
-    [self receiveData];
     [self initializeButtons];
+    [self receiveData];
 }
 
 -(void)initializeButtons
 {
+    self.spinner.hidden = FALSE;
+    self.spinner.transform = CGAffineTransformMakeScale(10, 10);
+    [self.spinner startAnimating];
     UIImage * btnImage = [UIImage imageNamed: @"darkgray.jpg"];
     UIImage * btnSelectedImage = [UIImage imageNamed: @"darkblue.jpg"];
     [progressBtn setBackgroundImage:btnSelectedImage forState:UIControlStateNormal];
@@ -92,29 +98,17 @@ int completed = 1;
     NSError *myError = nil;
     res = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
     
-    //[giftTableList beginUpdates];
     for(NSDictionary *res1 in res) {
         name = [res1 objectForKey:@"name"];
-        giftimage = [res1 objectForKey:@"giftimage"];
-        giftname = [res1 objectForKey:@"giftname"];
-        giftstatus = [res1 objectForKey:@"giftstatus"];
-        giftrecipient = [res1 objectForKey:@"recipientname"];
-
-        NSString *space = @"       ";
-        //NSString *row = [giftimage stringByAppendingString:[space stringByAppendingString:[giftname stringByAppendingString:[space stringByAppendingString:giftstatus]]]];
-        //NSLog(@"row = %@", row);
-        [giftImageList addObject:giftimage];
-        [giftNameList addObject:giftname];
-        [giftStatusList addObject:giftstatus];
-        [giftRecipientList addObject:giftrecipient];
-
-        //[gifts addObject:row];
+        [giftImageList addObject:[res1 objectForKey:@"giftimage"]];
+        [giftNameList addObject:[res1 valueForKey:@"giftname"]];
+        NSLog(@"gift name = %@", giftNameList);
+        [giftStatusList addObject:[res1 objectForKey:@"giftstatus"]];
         totalItems++;
     }
     firstName.text = name;
+    NSLog(@"total rows = %d", [giftNameList count]);
     [standardUserDefaults setObject:name forKey:@"name"];
-    NSLog(@"gifts rows = %d", [gifts count]);
-    //[giftTableList endUpdates];
     [giftTableList reloadData];
 }
 
@@ -137,44 +131,66 @@ int completed = 1;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     
-    UILabel *cellLabelS1 = [[UILabel alloc] initWithFrame:CGRectMake(280, 0, cell.frame.size.width, cell.frame.size.height)];
+    /*if ([[giftStatusList objectAtIndex:indexPath.row] isEqualToString:@"C"])
+    { // item needed - display checkmark
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else
+    { // not needed no checkmark
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }*/
+    UIImageView *checkImageView = [[UIImageView alloc]initWithFrame:CGRectMake(30,25, 60, 40)];
+    UIImage *checkImage = [UIImage imageNamed: @"check_mark.jpg"];
+    UIImage *sentImage = [UIImage imageNamed: @"sent_mark.png"];
+    if ([[giftStatusList objectAtIndex:indexPath.row] isEqualToString:@"C"])
+    {
+        checkImageView.image = checkImage;
+        [cell addSubview:checkImageView];
+    }
+    else if([[giftStatusList objectAtIndex:indexPath.row] isEqualToString:@"S"])
+    {
+        checkImageView.image = sentImage;
+        [cell addSubview:checkImageView];
+    }
+    else{
+        
+    }
+
+    UIImage *imageURL = [baseImageURL stringByAppendingString:[giftImageList objectAtIndex:indexPath.row]];
+    NSLog(@"imageURL = %@", imageURL);
+    UIImage *previewImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
     
-    [cellLabelS1 viewWithTag:1];
-    cellLabelS1.text = [giftNameList objectAtIndex:indexPath.row];
-    cellLabelS1.font = [UIFont systemFontOfSize: 45.0];
-    [cellLabelS1 setBackgroundColor:UIColor.clearColor]; // Make the table view transparent
-    [cell addSubview:cellLabelS1];
+    UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(140,20, 100, 65)];
+    imv.image = previewImage;
+    [cell addSubview:imv];
+
+    UILabel *cellLabelS3 = [[UILabel alloc] initWithFrame:CGRectMake(320, 20, cell.frame.size.width, cell.frame.size.height)];
     
-    UILabel *cellLabelS2 = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, cell.frame.size.width, cell.frame.size.height)];
-    
-    [cellLabelS2 viewWithTag:2];
-    cellLabelS2.text = [giftImageList objectAtIndex:indexPath.row];
-    cellLabelS2.font = [UIFont boldSystemFontOfSize: 45.0];
-    [cellLabelS2 setBackgroundColor:UIColor.clearColor]; // Make the table view transparent
-    [cell addSubview:cellLabelS2];
-    
-    UILabel *cellLabelS3 = [[UILabel alloc] initWithFrame:CGRectMake(475, 0, cell.frame.size.width, cell.frame.size.height)];
-    
-    [cellLabelS3 viewWithTag:3];
-    if(giftStatusList)
-    cellLabelS3.text = [giftStatusList objectAtIndex:indexPath.row];
-    cellLabelS3.font = [UIFont systemFontOfSize: 40.0];
+    [cellLabelS3 viewWithTag:2];
+    cellLabelS3.text = [giftNameList objectAtIndex:indexPath.row];
+    cellLabelS3.font = [UIFont boldSystemFontOfSize: 40.0];
     [cellLabelS3 setBackgroundColor:UIColor.clearColor]; // Make the table view transparent
     [cell addSubview:cellLabelS3];
     
     
+    /*cellLabelS3.text = [giftStatusList objectAtIndex:indexPath.row];
+    cellLabelS3.font = [UIFont systemFontOfSize: 40.0];
+    [cellLabelS3 setBackgroundColor:UIColor.clearColor]; // Make the table view transparent*/
+    cell.detailTextLabel.text = @"Here is the note";
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    self.spinner.hidden = TRUE;
+
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"total rows = %d", totalItems);
-    if(totalItems >= 6)
+    if([giftNameList count] >= 6)
     {
         return 6;
     }
     else {
-        return totalItems;
+        return [giftNameList count];
     }
 }
 
@@ -209,6 +225,8 @@ int completed = 1;
 
 -(IBAction)redirectAddGift
 {
+    self.spinner.hidden = FALSE;
+    [self.spinner startAnimating];
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil]  instantiateViewControllerWithIdentifier:@"GiftController"];
     [self presentModalViewController:vc animated:false];
 }
@@ -219,36 +237,9 @@ int completed = 1;
     [self presentModalViewController:vc animated:false];
 }
 
--(void)initializeCheckButton
+- (void)viewWillAppear:(BOOL)animated
 {
-    UIButton* checkBox = [[UIButton alloc] initWithFrame:CGRectMake(100, 60,120, 44)];
-    [checkBox setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
-    // uncomment below to see the hit area
-    // [checkBox setBackgroundColor:[UIColor redColor]];
-    [checkBox addTarget:self action:@selector(toggleButton:) forControlEvents: UIControlEventTouchUpInside];
-    // make the button's image flush left, and then push the image 20px left
-    [checkBox setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-    [checkBox setImageEdgeInsets:UIEdgeInsetsMake(0.0, 20.0, 0.0, 0.0)];
-    [self.view addSubview:checkBox];
-    
-    // add checkbox text text
-    UILabel *checkBoxLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 74,200, 16)];
-    [checkBoxLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [checkBoxLabel setTextColor:[UIColor whiteColor]];
-    [checkBoxLabel setBackgroundColor:[UIColor clearColor]];
-    [checkBoxLabel setText:@"Checkbox"];
-    [self.view addSubview:checkBox];
-}
-
-- (void)toggleButton: (id) sender
-{
-    checkboxSelected = !checkboxSelected;
-    UIButton* check = (UIButton*) sender;
-    if (checkboxSelected == NO)
-        [check setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
-    else
-        [check setImage:[UIImage imageNamed:@"checkbox.png"] forState:UIControlStateNormal];
-    
+    self.spinner.hidden = TRUE;
 }
 
 - (void)viewDidUnload
