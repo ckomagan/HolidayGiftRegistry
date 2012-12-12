@@ -38,6 +38,8 @@ NSString *imageURL;
 - (void)viewDidLoad
 {
     self.spinner.hidden = TRUE;
+    self.spinner.transform = CGAffineTransformMakeScale(2.5, 2.5);
+
     usePhotoBtn.hidden = TRUE;
     selectPhotoLbl.hidden = FALSE;
     
@@ -136,6 +138,8 @@ NSString *imageURL;
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    self.spinner.hidden = FALSE;
+    [self.spinner startAnimating];
     [self.popoverController dismissPopoverAnimated:true];
     NSString *mediaType = [info
                            objectForKey:UIImagePickerControllerMediaType];
@@ -152,6 +156,7 @@ NSString *imageURL;
         usePhotoBtn.hidden = FALSE;
         selectPhotoLbl.hidden = TRUE;
         previewImage.image = image;
+        self.spinner.hidden = TRUE;
     }
     else if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])
     {
