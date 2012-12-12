@@ -3,7 +3,7 @@
 @interface WishListController : UIViewController <UITableViewDelegate, UITextFieldDelegate, UITableViewDataSource>{
     IBOutlet UILabel *firstName;
     IBOutlet UITableView *giftTableList;
-    NSMutableArray *gifts, *giftNameList, *giftImageList, *giftStatusList, *giftRecipientList;
+    NSMutableArray *gifts, *giftIdList, *giftNameList, *giftImageList, *giftStatusList, *giftRecipientList;
     UITableViewCell *cell;
     BOOL checkboxSelected;
     UIButton *checkboxButton;

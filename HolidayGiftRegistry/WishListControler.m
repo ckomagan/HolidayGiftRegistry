@@ -1,6 +1,7 @@
 
 #import "WishListController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "RegistryDetails.h"
 
 @interface WishListController()
 @property (nonatomic, strong) NSString *nsURL;
@@ -11,8 +12,8 @@
 @synthesize giftimage, giftname, giftrecipient, giftstatus, nsURL, responseData;
 NSDictionary *res;
 NSUserDefaults *standardUserDefaults;
-int totalItems, userid;
-int rowHeight = 80;
+int totalItems, userid, giftId;
+int rowHeight = 100;
 NSString *name;
 int completed = 1;
 @synthesize spinner = _spinner;
@@ -43,6 +44,7 @@ NSString *baseImageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"snow-background.jpg"]]];
 
     giftTableList.rowHeight = rowHeight;
+    giftIdList = [[NSMutableArray alloc] init];
     giftImageList = [[NSMutableArray alloc] init]; giftNameList = [[NSMutableArray alloc] init]; giftStatusList = [[NSMutableArray alloc] init];
     giftTableList.scrollEnabled = YES;
     [giftTableList setBackgroundColor:UIColor.clearColor]; // Make the table view transparent
@@ -56,7 +58,7 @@ NSString *baseImageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
 -(void)initializeButtons
 {
     self.spinner.hidden = FALSE;
-    self.spinner.transform = CGAffineTransformMakeScale(10, 10);
+    self.spinner.transform = CGAffineTransformMakeScale(2.5, 2.5);
     [self.spinner startAnimating];
     UIImage * btnImage = [UIImage imageNamed: @"darkgray.jpg"];
     UIImage * btnSelectedImage = [UIImage imageNamed: @"darkblue.jpg"];
@@ -100,14 +102,15 @@ NSString *baseImageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
     
     for(NSDictionary *res1 in res) {
         name = [res1 objectForKey:@"name"];
+        [giftIdList addObject:[res1 objectForKey:@"giftid"]];
         [giftImageList addObject:[res1 objectForKey:@"giftimage"]];
         [giftNameList addObject:[res1 valueForKey:@"giftname"]];
-        NSLog(@"gift name = %@", giftNameList);
+        //NSLog(@"gift name = %@", giftNameList);
         [giftStatusList addObject:[res1 objectForKey:@"giftstatus"]];
         totalItems++;
     }
     firstName.text = name;
-    NSLog(@"total rows = %d", [giftNameList count]);
+    //NSLog(@"total rows = %d", [giftNameList count]);
     [standardUserDefaults setObject:name forKey:@"name"];
     [giftTableList reloadData];
 }
@@ -131,14 +134,6 @@ NSString *baseImageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     
-    /*if ([[giftStatusList objectAtIndex:indexPath.row] isEqualToString:@"C"])
-    { // item needed - display checkmark
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
-    else
-    { // not needed no checkmark
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }*/
     UIImageView *checkImageView = [[UIImageView alloc]initWithFrame:CGRectMake(30,25, 60, 40)];
     UIImage *checkImage = [UIImage imageNamed: @"check_mark.jpg"];
     UIImage *sentImage = [UIImage imageNamed: @"sent_mark.png"];
@@ -157,7 +152,7 @@ NSString *baseImageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
     }
 
     UIImage *imageURL = [baseImageURL stringByAppendingString:[giftImageList objectAtIndex:indexPath.row]];
-    NSLog(@"imageURL = %@", imageURL);
+    //NSLog(@"imageURL = %@", imageURL);
     UIImage *previewImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
     
     UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(140,20, 100, 65)];
@@ -205,11 +200,15 @@ NSString *baseImageURL = @"http://komagan.com/holidaygift/uploads/giftitem/";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSUInteger row = [indexPath row];
+    giftId = [[giftIdList objectAtIndex:row] intValue];
     giftimage = [giftImageList objectAtIndex:row];
     giftname = [giftNameList objectAtIndex:row];
     giftstatus = [giftStatusList objectAtIndex:row];
     giftrecipient = [giftRecipientList objectAtIndex:row];
-    [self performSegueWithIdentifier:@"showGiftDetails" sender:self];
+    RegistryDetails *registryDetails = [[RegistryDetails alloc] initWithNibName:@"RegistryDetails" bundle:nil];
+    registryDetails.giftId = giftId ;
+    registryDetails.userId = userid;
+    [self presentModalViewController:registryDetails animated:true];
 }
 
 - (void)touchesBegan: (NSSet *)touches withEvent: (UIEvent *)event

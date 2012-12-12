@@ -50,6 +50,7 @@ ImageController *peopleImageController;
 - (void)initiateUIControls
 {
     self.spinner.hidden = TRUE;
+    self.spinner.transform = CGAffineTransformMakeScale(2.5, 2.5);
 
     /* initiate name */
     firstNameTxt = [[UITextField alloc] initWithFrame:CGRectMake(240, 220, 440, 50)];
@@ -183,7 +184,7 @@ ImageController *peopleImageController;
     NSURL *url = [NSURL URLWithString:nsURL];
     //NSLog(@"%@", firstNameTxt.text);
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    userId = [standardUserDefaults objectForKey:@"id"];
+    userId = [standardUserDefaults objectForKey:@"userid"];
     [request setRequestMethod:@"POST"];
     [request addRequestHeader:@"Content-Type" value:@"application/xml;charset=UTF-8;"];
     [request setPostValue:userId forKey:@"user"];
@@ -248,7 +249,7 @@ ImageController *peopleImageController;
 {
     userfirstname = firstNameTxt.text; useremail = emailTxt.text; userphone = phoneNumberTxt.text;
     
-    if(userfirstname.length == 0 || useremail.length == 0 )
+    if(userfirstname.length == 0)
     {
         statusLabel.text = @"Please enter the contact info!";
     }
@@ -256,6 +257,17 @@ ImageController *peopleImageController;
         statusLabel.text = @" ";
         addContactBtn.enabled = YES;
     }
+    if(useremail.length == 0 || ![self validateEmail:(useremail)]) {
+        
+        statusLabel.text = @"Please enter a valid email address!";
+        
+    }
+}
+
+-(BOOL)validateEmail:(NSString *)email {
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:email];
 }
 
 -(BOOL)textFieldShouldReturn:(id)sender
@@ -304,7 +316,7 @@ ImageController *peopleImageController;
 
 -(IBAction)redirectMyRegistry
 {
-    self.spinner.hidden = TRUE;
+    self.spinner.hidden = FALSE;
     [self.spinner startAnimating];
 
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil]  instantiateViewControllerWithIdentifier:@"WishListController"];

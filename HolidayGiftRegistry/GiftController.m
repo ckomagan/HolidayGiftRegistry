@@ -11,7 +11,7 @@
 
 @implementation GiftController
 @synthesize levelpicker, popoverController, giftItemImageView, nsURL, responseData, userId;
-@synthesize giftName, giftType, giftPrice, giftStore, toolbar;
+@synthesize giftName, giftType, giftPrice, giftStore, giftNotes, toolbar;
 @synthesize spinner = _spinner;
 BOOL newMedia;
 NSUserDefaults *standardUserDefaults;
@@ -47,6 +47,7 @@ ImageController *imageController;
     addGiftBtn.enabled = NO;
     statusLabel.text = @" ";
     self.spinner.hidden = TRUE;
+    self.spinner.transform = CGAffineTransformMakeScale(2.5, 2.5);
 
     levelpicker = [NSArray arrayWithObjects:@"Electronics", @"Home & Garden", @"Children & Toys", @"Games & Music", @"Health & Beauty", @"Books", nil];
     giftTypePicker = [[UIPickerView alloc] initWithFrame:CGRectZero];
@@ -54,7 +55,7 @@ ImageController *imageController;
     giftTypePicker.showsSelectionIndicator = YES;
     [self.view addSubview:giftTypePicker];
     //giftTypePicker.center = CGPointMake(600,460);
-    giftTypePicker.frame = CGRectMake(460,340,220,180);
+    giftTypePicker.frame = CGRectMake(470,300,220,180);
 
     UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc]
                                      initWithTitle:@"Camera"
@@ -81,7 +82,7 @@ ImageController *imageController;
     [[giftsBtn layer] setBackgroundColor:[UIColor grayColor].CGColor];
 
     /* initiate item name */
-    itemText = [[UITextField alloc] initWithFrame:CGRectMake(480, 240, 200, 50)];
+    itemText = [[UITextField alloc] initWithFrame:CGRectMake(480, 220, 200, 50)];
     itemText.borderStyle = 3; // rounded, recessed rectangle
     itemText.autocorrectionType = UITextAutocorrectionTypeNo;
     itemText.textAlignment = UITextAlignmentCenter;
@@ -93,7 +94,7 @@ ImageController *imageController;
     [self.view addSubview:itemText];
     
     /* initiate item price */
-    priceText = [[UITextField alloc] initWithFrame:CGRectMake(480, 560, 200, 50)];
+    priceText = [[UITextField alloc] initWithFrame:CGRectMake(480, 520, 200, 50)];
     priceText.borderStyle = 3; // rounded, recessed rectangle
     priceText.autocorrectionType = UITextAutocorrectionTypeNo;
     priceText.textAlignment = UITextAlignmentCenter;
@@ -105,7 +106,7 @@ ImageController *imageController;
     [self.view addSubview:priceText];
     
     /* initiate item vendor */
-    storeText = [[UITextField alloc] initWithFrame:CGRectMake(480, 660, 200, 50)];
+    storeText = [[UITextField alloc] initWithFrame:CGRectMake(480, 600, 200, 50)];
     storeText.borderStyle = 3; // rounded, recessed rectangle
     storeText.autocorrectionType = UITextAutocorrectionTypeNo;
     storeText.textAlignment = UITextAlignmentCenter;
@@ -115,6 +116,19 @@ ImageController *imageController;
     storeText.textColor = [UIColor blackColor];
     storeText.delegate = self;
     [self.view addSubview:storeText];
+    
+    /* initiate item notes */
+    notesText = [[UITextField alloc] initWithFrame:CGRectMake(480, 680, 200, 50)];
+    notesText.borderStyle = 3; // rounded, recessed rectangle
+    notesText.autocorrectionType = UITextAutocorrectionTypeNo;
+    notesText.textAlignment = UITextAlignmentCenter;
+    notesText.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [notesText setReturnKeyType:UIReturnKeyDone];
+    notesText.font = [UIFont fontWithName:@"Trebuchet MS" size:45];
+    notesText.textColor = [UIColor blackColor];
+    notesText.delegate = self;
+    [self.view addSubview:notesText];
+
     
     //giftItemImage.image = image;
 }
@@ -140,7 +154,7 @@ ImageController *imageController;
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
-    CGRect rect = CGRectMake(560, 260, 160, 100);
+    CGRect rect = CGRectMake(580, 220, 160, 100);
     UILabel *label = [[UILabel alloc]initWithFrame:rect];
     label.text = [levelpicker objectAtIndex:row];
     label.font = [UIFont systemFontOfSize:20.0];
@@ -233,9 +247,9 @@ finishedSavingWithError:(NSError *)error
     NSURL *url = [NSURL URLWithString:nsURL];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    userId = [standardUserDefaults objectForKey:@"id"];
-    NSLog(@"%@", userId);
-
+    userId = [NSString stringWithFormat:@"%@", [standardUserDefaults objectForKey:@"userid"]];
+    NSLog(@"userId = %@", userId);
+    NSString *giftImageURL = [userId stringByAppendingString:giftName];
     [request setRequestMethod:@"POST"];
     [request addRequestHeader:@"Content-Type" value:@"application/xml;charset=UTF-8;"];
     [request setPostValue:userId forKey:@"userid"];
@@ -243,7 +257,8 @@ finishedSavingWithError:(NSError *)error
     [request setPostValue:giftType forKey:@"giftType"];
     [request setPostValue:giftPrice forKey:@"giftPrice"];
     [request setPostValue:giftStore forKey:@"giftStore"];
-    [request setPostValue:[giftImageURL stringByAppendingString:giftName] forKey:@"giftImage"];
+    [request setPostValue:giftImageURL forKey:@"giftImage"];
+    [request setPostValue:@"N" forKey:@"status"];
 
     [request setDelegate:self];
     [request startAsynchronous];

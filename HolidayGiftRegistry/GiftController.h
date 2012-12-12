@@ -2,7 +2,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 @interface GiftController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate, UITextFieldDelegate>{
-    UITextField *itemText, *priceText, *storeText;
+    UITextField *itemText, *priceText, *storeText, *notesText;
     IBOutlet UIPickerView *giftTypePicker;
     IBOutlet UILabel *statusLabel, *cameraLabel;
     UIPopoverController *popoverController;
@@ -11,7 +11,7 @@
     IBOutlet UIButton *peopleBtn, *giftsBtn, *progressBtn, *storeBtn, *settingsBtn;
 }
 @property (nonatomic, retain) NSArray *levelpicker;
-@property (nonatomic, strong) NSString *giftName, *giftType, *giftPrice, *giftStore, *userId;
+@property (nonatomic, strong) NSString *giftName, *giftType, *giftPrice, *giftStore, *giftNotes, *userId;
 @property (nonatomic, retain) UIPopoverController *popoverController;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) IBOutlet UIImageView *giftItemImageView;
